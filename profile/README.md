@@ -1,8 +1,8 @@
 # ReplyNodes
 
-**Agent-native social publishing for solo builders and small teams.**
+**Agent-native social publishing for enterprise teams.**
 
-ReplyNodes connects MCP-capable AI agents — Claude, Cursor, Codex, and others — to plan, draft, approve, schedule, publish, and reply across 30+ social networks. Where most scheduling tools are built for a human clicking through a dashboard, ReplyNodes is built for an agent calling an API, with approval steps where you want them.
+ReplyNodes connects MCP-capable AI agents — Claude, Cursor, Codex, and others — to plan, draft, approve, schedule, publish, and reply across 30+ social networks. Where most scheduling tools are built for a human clicking through a dashboard, ReplyNodes is built for an agent calling an API, with approval steps where your team wants them.
 
 - 🌐 **Product & pricing:** [replynodes.com](https://replynodes.com)
 - 📚 **Docs & API reference:** [docs.replynodes.com](https://docs.replynodes.com)
