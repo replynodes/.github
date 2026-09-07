@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ReplyNodes Pricing & Credit Model</title>
+  <meta name="description" content="Canonical pricing and credit model for ReplyNodes — the data layer for AI agents." />
+  <meta name="robots" content="index,follow" />
+  <style>
+    :root {
+      --bg: #fafafa;
+      --card: #ffffff;
+      --text: #0a0a0a;
+      --muted: #666a73;
+      --line: #e5e7eb;
+      --soft: #f3f4f6;
+      --accent: #2563eb;
+      --radius: 18px;
+      --shadow: 0 14px 38px rgba(0,0,0,.06);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    .wrap { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+    header { padding: 76px 0 42px; text-align: center; }
+    .eyebrow { font: 600 12px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .16em; color: var(--muted); text-transform: uppercase; }
+    h1 { font-size: clamp(42px, 7vw, 72px); line-height: 1.02; letter-spacing: -.045em; margin: 18px auto 16px; max-width: 900px; }
+    .sub { max-width: 760px; margin: 0 auto; font-size: 20px; color: var(--muted); }
+    .brandline { margin-top: 18px; font: 500 15px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: #4b5563; }
+    section { padding: 34px 0; }
+    h2 { font-size: clamp(30px, 4vw, 44px); line-height: 1.08; letter-spacing: -.035em; margin: 0 0 12px; }
+    .section-copy { color: var(--muted); margin: 0 0 24px; max-width: 760px; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+    .card.featured { border-color: #111827; box-shadow: 0 14px 40px rgba(0,0,0,.10); }
+    .plan { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+    .price { font-size: 38px; font-weight: 760; letter-spacing: -.04em; margin-top: 12px; }
+    .price small { font-size: 15px; color: var(--muted); font-weight: 500; }
+    .credits { margin: 8px 0 16px; font-weight: 650; }
+    .desc { color: var(--muted); font-size: 14px; min-height: 44px; }
+    .pill { display: inline-block; font-size: 11px; font-weight: 700; border: 1px solid var(--line); border-radius: 999px; padding: 4px 8px; margin-top: 14px; background: var(--soft); }
+    table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+    th, td { text-align: left; padding: 15px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { font-size: 12px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); background: #fcfcfc; }
+    tr:last-child td { border-bottom: 0; }
+    .credit { font: 700 14px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; }
+    .group { display: inline-block; font: 600 11px/1.2 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); background: var(--soft); border: 1px solid var(--line); padding: 4px 7px; border-radius: 8px; }
+    .callout { display: grid; grid-template-columns: 1.2fr .8fr; gap: 18px; }
+    .code { background: #0a0a0a; color: #f8fafc; border-radius: var(--radius); padding: 22px; font: 13px/1.65 ui-monospace, SFMono-Regular, Menlo, monospace; overflow-x: auto; white-space: pre; }
+    .rules { margin: 0; padding-left: 20px; }
+    .rules li { margin: 7px 0; }
+    .muted { color: var(--muted); }
+    footer { padding: 56px 0 70px; text-align: center; color: var(--muted); font-size: 13px; }
+    @media (max-width: 980px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .callout { grid-template-columns: 1fr; } }
+    @media (max-width: 620px) { .wrap { width: min(100% - 24px, 1160px); } header { padding-top: 52px; } .grid { grid-template-columns: 1fr; } .desc { min-height: 0; } th, td { padding: 12px; } .table-wrap { overflow-x: auto; } .sub { font-size: 17px; } }
+  </style>
+
+  <script type="application/json" id="replynodes-pricing-spec">
+  {
+  "product": "ReplyNodes",
+  "positioning": "The data layer for AI agents",
+  "tagline": "Agents ask. Nodes reply.",
+  "currency": "USD",
+  "pricing_model": "subscription_plus_unified_credits",
+  "annual_discount": "2_months_free",
+  "plans": [
+    {"name":"Free","price_monthly_usd":0,"credits":500,"credit_period":"one_time","overage":false},
+    {"name":"Developer","price_monthly_usd":19,"credits":10000,"credit_period":"monthly","overage":{"enabled":true,"usd_per_10000_credits":20}},
+    {"name":"Pro","price_monthly_usd":99,"credits":100000,"credit_period":"monthly","overage":{"enabled":true,"usd_per_10000_credits":10}}
+  ],
+  "credit_costs": [
+    {"provider":"Apple App Store","operation":"standard request","credits":1},
+    {"provider":"Google Play","operation":"standard request","credits":1},
+    {"provider":"Web Scrape","operation":"standard page","credits":1},
+    {"provider":"Google Search","operation":"search","credits":2},
+    {"provider":"Google News","operation":"search","credits":2},
+    {"provider":"Reddit","operation":"standard request","credits":2},
+    {"provider":"YouTube","operation":"search/video/channel/comments","credits":2},
+    {"provider":"Yelp","operation":"standard request","credits":2},
+    {"provider":"Web Scrape","operation":"JS/browser rendered page","credits":5},
+    {"provider":"X / Twitter","operation":"standard request","credits":10},
+    {"provider":"Instagram","operation":"standard request","credits":10},
+    {"provider":"TikTok","operation":"standard request","credits":10},
+    {"provider":"YouTube Transcript","operation":"per video","credits":200}
+  ],
+  "billing_rules": [
+    "Each endpoint has a configurable credit_cost.",
+    "Credit cost is configuration or database driven and must not be hardcoded.",
+    "Credits are charged only once per customer request.",
+    "Internal retries never charge additional credits.",
+    "4xx, 5xx, provider failures, and blocked requests cost 0 credits.",
+    "A valid successful response with zero results is billable.",
+    "Each pagination request is a new billable request.",
+    "Monthly plan credits reset every billing cycle.",
+    "Monthly credits do not roll over.",
+    "Paid plans may enable overage.",
+    "Free plan cannot use overage.",
+    "Cache hits cost the same credits as non-cache hits."
+  ]
+}
+  </script>
+</head>
+<body>
+  <header class="wrap">
+    <div class="eyebrow">ReplyNodes Pricing</div>
+    <h1>Simple pricing for every node.</h1>
+    <p class="sub">One credit balance across web search, social platforms, app data, and scraping.</p>
+    <div class="brandline">Agents ask. Nodes reply.</div>
+  </header>
+
+  <main>
+    <section class="wrap">
+      <div class="grid">
+        <article class="card"><div class="plan">Free</div><div class="price">$0</div><div class="credits">500 credits one-time</div><div class="desc">Test every data node before paying. No overage.</div></article>
+        <article class="card"><div class="plan">Developer</div><div class="price">$19 <small>/mo</small></div><div class="credits">10,000 credits / month</div><div class="desc">For developers building their first production agent.</div></article>
+        <article class="card featured"><div class="plan">Pro</div><div class="price">$99 <small>/mo</small></div><div class="credits">100,000 credits / month</div><div class="desc">For production agents and applications with regular usage.</div><div class="pill">Most popular</div></article>
+      </div>
+      <p class="muted" style="margin-top:14px">Annual billing: two months free. All paid plans can access all data nodes.</p>
+    </section>
+
+    <section class="wrap">
+      <h2>How credits work</h2>
+      <p class="section-copy">Every endpoint maps to a simple credit cost. One balance works across every ReplyNodes data source.</p>
+      <div class="table-wrap"><table><thead><tr><th>Provider / operation</th><th>Category</th><th>Credit cost</th></tr></thead><tbody>
+        <tr><td>Apple App Store — standard request</td><td><span class="group">apps</span></td><td class="credit">1 credit</td></tr>
+        <tr><td>Google Play — standard request</td><td><span class="group">apps</span></td><td class="credit">1 credit</td></tr>
+        <tr><td>Web Scrape — standard page</td><td><span class="group">web</span></td><td class="credit">1 credit</td></tr>
+        <tr><td>Google Search — search</td><td><span class="group">search</span></td><td class="credit">2 credits</td></tr>
+        <tr><td>Google News — search</td><td><span class="group">search</span></td><td class="credit">2 credits</td></tr>
+        <tr><td>Reddit — standard request</td><td><span class="group">social</span></td><td class="credit">2 credits</td></tr>
+        <tr><td>YouTube — search / video / channel / comments</td><td><span class="group">social</span></td><td class="credit">2 credits</td></tr>
+        <tr><td>Yelp — standard request</td><td><span class="group">local</span></td><td class="credit">2 credits</td></tr>
+        <tr><td>Web Scrape — JS/browser rendered page</td><td><span class="group">web</span></td><td class="credit">5 credits</td></tr>
+        <tr><td>X / Twitter — standard request</td><td><span class="group">social</span></td><td class="credit">10 credits</td></tr>
+        <tr><td>Instagram — standard request</td><td><span class="group">social</span></td><td class="credit">10 credits</td></tr>
+        <tr><td>TikTok — standard request</td><td><span class="group">social</span></td><td class="credit">10 credits</td></tr>
+        <tr><td>YouTube Transcript — per video</td><td><span class="group">media</span></td><td class="credit">200 credits</td></tr>
+      </tbody></table></div>
+    </section>
+
+    <section class="wrap"><div class="callout" style="grid-template-columns:1fr;"><div><h2>Overage</h2><p class="section-copy">Production traffic should not stop just because a monthly bundle is exhausted. Paid plans can opt into overage with a monthly spending limit.</p><div class="table-wrap"><table><thead><tr><th>Plan</th><th>Overage price</th></tr></thead><tbody><tr><td>Developer</td><td>$20 / 10,000 credits</td></tr><tr><td>Pro</td><td>$10 / 10,000 credits</td></tr></tbody></table></div></div></div></section>
+
+    <section class="wrap"><h2>Canonical billing rules</h2><p class="section-copy">These rules are part of the product contract and should be implemented consistently across ReplyNodes billing.</p><div class="card"><ol class="rules"><li>Each endpoint has a configurable <code>credit_cost</code>.</li><li>Credit cost is configuration/database-driven, never hardcoded.</li><li>Credits are charged only once per customer request.</li><li>Internal retries never charge additional credits.</li><li>4xx, 5xx, provider failure, or blocked request = 0 credits.</li><li>A valid successful response with zero results is billable.</li><li>Each pagination request is a new billable request.</li><li>Monthly plan credits reset every billing cycle.</li><li>Monthly credits do not roll over.</li><li>Paid plans may enable overage; Free cannot.</li><li>Cache hits cost the same credits as non-cache hits.</li></ol></div></section>
+
+    <section class="wrap"><h2>Architecture contract</h2><p class="section-copy">Meter capabilities, not vendors. Provider pricing can change without forcing a billing redesign.</p><div class="code">endpoint
+--------
+id
+provider
+operation
+credit_cost
+metered
+enabled
+
+Examples
+appstore.search             1
+googleplay.search           1
+web.scrape                  1
+google.search               2
+reddit.search               2
+youtube.search              2
+web.scrape.rendered         5
+twitter.search             10
+instagram.search           10
+tiktok.search              10
+youtube.transcript        200</div></section>
+  </main>
+
+  <footer class="wrap">Canonical ReplyNodes pricing specification · Last updated 2026-09-07</footer>
+</body>
+</html>
